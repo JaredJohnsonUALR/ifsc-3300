@@ -1,38 +1,53 @@
 "use strict";
 
 const $ = selector => document.querySelector(selector);
-
-document.addEventListener("DOMContentLoaded", () => {
     
-    const caption = $("#caption");        // the h2 element for the caption
-    const mainImage = $("#main_image");   // the img element for the show
-        
-    // get all the <a> tags in the ul element
+const imageCache = [];
+let imageCounter = 0;
+let timer = null;
+let image = null;
+
+const mainImage = $("#main_image");   // the img element for the show
+const caption = $("#caption");        // the h2 element for the caption
+
+const runSlideShow = function() {
+    imageCounter = (imageCounter + 1) % imageCache.length;
+    image = imageCache[imageCounter];
+    mainImage.src = image.src;
+    mainImage.alt = image.alt;
+    caption.textContent = image.alt;
+};
+         
+document.addEventListener("DOMContentLoaded", () => {
     const links = $("#image_list").querySelectorAll("a");
     
-    // Process image links
-    const imageCache = [];
-    let image = null;
+    // process image links
     for ( let link of links ) {
         // Preload image and copy title properties
         image = new Image();
         image.src = link.href;
         image.alt = link.title;
+
         // add image to array 
         imageCache[imageCache.length] = image;
     }
 
-    // Start slide show
-    let imageCounter = 0;
-    setInterval( () => { 
-        // calculate the index for the current image
-        imageCounter = (imageCounter + 1) % imageCache.length;
-        // get image from array
-        image = imageCache[imageCounter];
-        // set HTML img and h2 with values from image object
-        mainImage.src = image.src;
-        mainImage.alt = image.alt;
-        caption.textContent = image.alt;
-    },
-    2000);  // 2 second interval
+    // attach start and pause event handlers
+    //when start button is clicked
+    $("#start").addEventListener("click", () => 
+    {
+        runSlideShow(); //run the slideshow a single time after start button is hit.
+        timer = setInterval(runSlideShow, 2000); //calls the runSlideShow function every 2 secs
+        //switch which buttons are enabled/disabled
+        $("#pause").disabled = false;
+        $("#start").disabled = true;
+    });
+    //when pause button is clicked
+    $("#pause").addEventListener("click", () => 
+    {
+        clearInterval(timer); //clears the timer
+        //switch which buttons are enabled/disabled
+        $("#pause").disabled = true;
+        $("#start").disabled = false;
+    });
 });

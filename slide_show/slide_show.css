@@ -6,14 +6,9 @@ body {
     border: 3px solid blue;
     padding: 0 2em 1em;
 }
-h1, h2{
+h1, h2 {
     color: blue;
     text-align: center;
-}
-#center
-{
-    text-align: center;
-    display: block;
 }
 ul { 
     display: none; 
