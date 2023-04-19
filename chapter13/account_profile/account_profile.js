@@ -12,6 +12,16 @@ const isDate = (date, datePattern) => {
     return true;
 };
 
+const isccDate = (date, datePattern) => {
+    if (!datePattern.test(date)) { return false; }
+
+    const dateParts = date.split("/");
+    const month = parseInt( dateParts[0] );
+
+    if ( month < 1 || month > 12 ) { return false; }
+    return true;
+};
+
 $( document ).ready( () => {
 
     $( "#save" ).click( () => {
@@ -22,12 +32,16 @@ $( document ).ready( () => {
         const phone = $("#phone").val();
         const zip = $("#zip").val();
         const dob = $("#dob").val();
+        const credit = $("#card").val();
+        const creditDate = $("#cc_date").val();
 
         // regular expressions for validity testing
         const emailPattern = /^[\w\.\-]+@[\w\.\-]+\.[a-zA-Z]+$/;
         const phonePattern = /^\d{3}-\d{3}-\d{4}$/;
         const zipPattern = /^\d{5}(-\d{4})?$/;
         const datePattern = /^[01]?\d\/[0-3]\d\/\d{4}$/;
+        const creditPattern = /^\d{4}-\d{4}-\d{4}-\d{4}$/;
+        const creditDatePattern = /^[01]?\d\/\d{4}$/;
         
         // check user entries for validity
         let isValid = true;
@@ -46,6 +60,16 @@ $( document ).ready( () => {
         if ( dob === "" || !isDate(dob, datePattern) ) {
             isValid = false;
             $("#dob").next().text("Please enter a valid date in MM/DD/YYYY format.");
+        }
+        if (credit === "" || !creditPattern.test(credit))
+        {
+            isValid = false;
+            $("#card").next().text("Please enter a valid date in NNNN-NNNN-NNNN-NNNN format.");
+        }
+        if (creditDate === "" || !isccDate(creditDate, creditDatePattern))
+        {
+            isValid = false;
+            $("#cc_date").next().text("Please enter a valid date in MM/YYYY format.");
         }
         
         if ( isValid ) { 
