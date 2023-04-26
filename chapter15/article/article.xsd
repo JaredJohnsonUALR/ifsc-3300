@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="article">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="title" type="xs:string" />
+				<xs:element name="date" type="xs:string" />
+				<xs:element name="author">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="firstName" type="xs:string" />
+							<xs:element name="lastName" type="xs:string" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="summary" type="xs:string" />
+				<xs:element name="content" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

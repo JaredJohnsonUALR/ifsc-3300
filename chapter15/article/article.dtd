@@ -1,0 +1,11 @@
+<!ELEMENT article (title, date, author, summary, content)>
+
+<!ELEMENT title ( #PCDATA )>
+<!ELEMENT date ( #PCDATA )>
+
+<!ELEMENT author ( firstName, lastName )>
+<!ELEMENT firstName ( #PCDATA )>
+<!ELEMENT lastName ( #PCDATA )>
+
+<!ELEMENT summary ( #PCDATA )>
+<!ELEMENT content ( #PCDATA )>
